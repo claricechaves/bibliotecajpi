@@ -1,0 +1,8 @@
+-- CreateTable
+CREATE TABLE "Livro" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "titulo" TEXT NOT NULL,
+    "autor" TEXT NOT NULL,
+    "ano" INTEGER,
+    "criadoEm" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
