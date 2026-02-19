@@ -1,3 +1,4 @@
 {
-  "/not-found": "app/not-found.js"
+  "/livros/page": "app/livros/page.js",
+  "/api/livros/consultar/route": "app/api/livros/consultar/route.js"
 }

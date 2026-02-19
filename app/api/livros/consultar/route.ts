@@ -17,16 +17,15 @@ export async function POST(request: Request) {
       return new NextResponse("ISBN não informado", { status: 400 });
     }
 
-    // Verifica se o livro já existe
     const existente = await prisma.item.findUnique({ where: { isbn } });
     if (existente) {
       return NextResponse.json({ message: "Livro já cadastrado", livro: existente });
     }
 
-    // Busca na Open Library
     const res = await fetch(
       `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
     );
+
     const data = await res.json();
     const info: OpenLibraryBook = data[`ISBN:${isbn}`] || {};
 
@@ -34,7 +33,6 @@ export async function POST(request: Request) {
       return new NextResponse("Livro não encontrado na Open Library", { status: 404 });
     }
 
-    // Cria o livro automaticamente com os campos completos
     const livro = await prisma.item.create({
       data: {
         titulo: info.title,
@@ -51,4 +49,12 @@ export async function POST(request: Request) {
     console.error(error);
     return new NextResponse("Erro interno no servidor", { status: 500 });
   }
+}
+
+export async function GET() {
+  const livros = await prisma.item.findMany({
+    where: { tipo: "LIVRO" }
+  });
+
+  return NextResponse.json(livros);
 }
