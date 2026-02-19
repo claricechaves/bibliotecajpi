@@ -6,44 +6,35 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
-model Usuario {
-  id          Int        @id @default(autoincrement())
-  nome        String
-  email       String     @unique
-  telefone    String?
-  matricula   String?    @unique
-  role        String     @default("ALUNO")
-  criadoEm    DateTime   @default(now())
 
+// ------------------ MODELOS ------------------
+
+model Aluno {
+  id          Int          @id @default(autoincrement())
+  nome        String
+  email       String       @unique
+  matricula   String       @unique
   emprestimos Emprestimo[]
 }
 
 model Item {
-  id          Int        @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   titulo      String
   autor       String
-  tipo        String
-  isbn        String?    @unique
+  isbn        String       @unique
+  foto        String?
   resumo      String?
-  fotoUrl     String?
-  rfidTag     String?    @unique
-  criadoEm    DateTime   @default(now())
-
+  tipo        String
   emprestimos Emprestimo[]
 }
 
 model Emprestimo {
-  id             Int       @id @default(autoincrement())
-  usuario        Usuario   @relation(fields: [usuarioId], references: [id])
-  usuarioId      Int
-
-  item           Item      @relation(fields: [itemId], references: [id])
-  itemId         Int
-
-  dataEmprestimo DateTime  @default(now())
-  dataDevolucao  DateTime
-  devolvido      Boolean   @default(false)
-  renovacoes     Int       @default(0)
-
-  criadoEm       DateTime  @default(now())
+  id        Int       @id @default(autoincrement())
+  aluno     Aluno     @relation(fields: [alunoId], references: [id])
+  alunoId   Int
+  item      Item      @relation(fields: [itemId], references: [id])
+  itemId    Int
+  dataEmp   DateTime  @default(now())
+  dataDev   DateTime?
+  devolvido Boolean   @default(false)
 }
