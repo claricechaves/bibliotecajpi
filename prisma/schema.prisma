@@ -29,12 +29,17 @@ model Item {
 }
 
 model Emprestimo {
-  id        Int       @id @default(autoincrement())
-  aluno     Aluno     @relation(fields: [alunoId], references: [id])
-  alunoId   Int
-  item      Item      @relation(fields: [itemId], references: [id])
-  itemId    Int
-  dataEmp   DateTime  @default(now())
-  dataDev   DateTime?
-  devolvido Boolean   @default(false)
+  id          Int       @id @default(autoincrement())
+
+  alunoId     Int?
+  aluno       Aluno?    @relation(fields: [alunoId], references: [id])
+
+  matricula   String?
+
+  itemId      Int
+  item        Item      @relation(fields: [itemId], references: [id])
+
+  dataEmp     DateTime  @default(now())
+  dataDev     DateTime?
+  devolvido   Boolean   @default(false)
 }

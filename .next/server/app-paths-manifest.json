@@ -1,6 +1,7 @@
 {
-  "/not-found": "app/not-found.js",
   "/page": "app/page.js",
   "/livros/page": "app/livros/page.js",
-  "/api/livros/consultar/route": "app/api/livros/consultar/route.js"
+  "/api/livros/consultar/route": "app/api/livros/consultar/route.js",
+  "/api/emprestar/route": "app/api/emprestar/route.js",
+  "/api/devolver/route": "app/api/devolver/route.js"
 }

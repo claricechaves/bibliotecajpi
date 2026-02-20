@@ -1,4 +1,4 @@
-import { prisma } from "../../../../lib/db";
+import { prisma } from "../../../../lib/prisma";
 import { NextResponse } from "next/server";
 
 type OpenLibraryBook = {
@@ -53,7 +53,17 @@ export async function POST(request: Request) {
 
 export async function GET() {
   const livros = await prisma.item.findMany({
-    where: { tipo: "LIVRO" }
+    where: { tipo: "LIVRO" },
+    include: {
+      emprestimos: {
+        where: {
+          devolvido: false,
+        },
+        include: {
+          aluno: true, // 👈 importante
+        },
+      },
+    },
   });
 
   return NextResponse.json(livros);
